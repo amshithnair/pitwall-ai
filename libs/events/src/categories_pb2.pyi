@@ -131,15 +131,47 @@ class RaceControlFlag(_message.Message):
     reason: str
     def __init__(self, flag_type: _Optional[str] = ..., reason: _Optional[str] = ...) -> None: ...
 
-class PredictionGenerated(_message.Message):
-    __slots__ = ("prediction_type", "payload_json", "confidence")
-    PREDICTION_TYPE_FIELD_NUMBER: _ClassVar[int]
-    PAYLOAD_JSON_FIELD_NUMBER: _ClassVar[int]
+class TyreLifePredicted(_message.Message):
+    __slots__ = ("estimated_laps_remaining", "confidence", "model_version")
+    ESTIMATED_LAPS_REMAINING_FIELD_NUMBER: _ClassVar[int]
     CONFIDENCE_FIELD_NUMBER: _ClassVar[int]
-    prediction_type: str
-    payload_json: str
+    MODEL_VERSION_FIELD_NUMBER: _ClassVar[int]
+    estimated_laps_remaining: int
     confidence: float
-    def __init__(self, prediction_type: _Optional[str] = ..., payload_json: _Optional[str] = ..., confidence: _Optional[float] = ...) -> None: ...
+    model_version: str
+    def __init__(self, estimated_laps_remaining: _Optional[int] = ..., confidence: _Optional[float] = ..., model_version: _Optional[str] = ...) -> None: ...
+
+class SafetyCarProbabilityPredicted(_message.Message):
+    __slots__ = ("probability", "confidence", "model_version")
+    PROBABILITY_FIELD_NUMBER: _ClassVar[int]
+    CONFIDENCE_FIELD_NUMBER: _ClassVar[int]
+    MODEL_VERSION_FIELD_NUMBER: _ClassVar[int]
+    probability: float
+    confidence: float
+    model_version: str
+    def __init__(self, probability: _Optional[float] = ..., confidence: _Optional[float] = ..., model_version: _Optional[str] = ...) -> None: ...
+
+class LapTimePredicted(_message.Message):
+    __slots__ = ("predicted_lap_time_ms", "confidence", "model_version")
+    PREDICTED_LAP_TIME_MS_FIELD_NUMBER: _ClassVar[int]
+    CONFIDENCE_FIELD_NUMBER: _ClassVar[int]
+    MODEL_VERSION_FIELD_NUMBER: _ClassVar[int]
+    predicted_lap_time_ms: int
+    confidence: float
+    model_version: str
+    def __init__(self, predicted_lap_time_ms: _Optional[int] = ..., confidence: _Optional[float] = ..., model_version: _Optional[str] = ...) -> None: ...
+
+class StrategyOutcomePredicted(_message.Message):
+    __slots__ = ("scenario_name", "predicted_finish_position", "confidence", "model_version")
+    SCENARIO_NAME_FIELD_NUMBER: _ClassVar[int]
+    PREDICTED_FINISH_POSITION_FIELD_NUMBER: _ClassVar[int]
+    CONFIDENCE_FIELD_NUMBER: _ClassVar[int]
+    MODEL_VERSION_FIELD_NUMBER: _ClassVar[int]
+    scenario_name: str
+    predicted_finish_position: int
+    confidence: float
+    model_version: str
+    def __init__(self, scenario_name: _Optional[str] = ..., predicted_finish_position: _Optional[int] = ..., confidence: _Optional[float] = ..., model_version: _Optional[str] = ...) -> None: ...
 
 class StrategyGenerated(_message.Message):
     __slots__ = ("strategy_type", "payload_json")

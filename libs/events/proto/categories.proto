@@ -90,10 +90,29 @@ message RaceControlFlag {
 }
 
 // 5.9 Prediction Events
-message PredictionGenerated {
-  string prediction_type = 1; // e.g., "pit_window"
-  string payload_json = 2; // Flexible JSON payload for complex predictions
+message TyreLifePredicted {
+  int32 estimated_laps_remaining = 1;
+  float confidence = 2;
+  string model_version = 3;
+}
+
+message SafetyCarProbabilityPredicted {
+  float probability = 1;
+  float confidence = 2;
+  string model_version = 3;
+}
+
+message LapTimePredicted {
+  int32 predicted_lap_time_ms = 1;
+  float confidence = 2;
+  string model_version = 3;
+}
+
+message StrategyOutcomePredicted {
+  string scenario_name = 1;
+  int32 predicted_finish_position = 2;
   float confidence = 3;
+  string model_version = 4;
 }
 
 // 5.10 Strategy Events
