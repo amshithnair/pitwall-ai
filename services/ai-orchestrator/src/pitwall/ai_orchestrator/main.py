@@ -3,8 +3,13 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+from pitwall.ai_orchestrator.agent import F1EngineeringAgent
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Initialize stateless agent
+agent = F1EngineeringAgent()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -17,6 +22,13 @@ app = FastAPI(title="PitWall AI - Orchestrator", lifespan=lifespan)
 class ChatRequest(BaseModel):
     message: str
     session_id: str
+
+@app.post("/chat")
+def chat_endpoint(request: ChatRequest):
+    # In a fully stateless design for the milestone, we pass the message directly.
+    # Frontend handles conversation history rendering.
+    response = agent.chat(request.message)
+    return {"response": response, "session_id": request.session_id}
 
 @app.get("/health")
 def health():
