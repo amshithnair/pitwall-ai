@@ -1,0 +1,33 @@
+[project]
+name = "pitwall-prediction-engine"
+version = "0.1.0"
+description = "PitWall AI - Prediction Engine"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "redis>=5.0.1",
+    "sqlalchemy>=2.0.0",
+    "psycopg2-binary>=2.9.0",
+    "scikit-learn>=1.4.0",
+    "pandas>=2.0.0",
+    "numpy>=1.26.0",
+    "joblib>=1.3.2",
+    "pitwall-common",
+    "pitwall-config",
+    "pitwall-logging",
+    "pitwall-events"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pitwall"]
+
+[tool.uv.sources]
+pitwall-common = { workspace = true }
+pitwall-config = { workspace = true }
+pitwall-logging = { workspace = true }
+pitwall-events = { workspace = true }
