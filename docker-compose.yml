@@ -107,6 +107,19 @@ services:
       - redis
       - timescaledb
 
+  strategy-engine:
+    build:
+      context: .
+      dockerfile: services/strategy-engine/Dockerfile
+    ports:
+      - "8005:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    depends_on:
+      - redis
+      - postgres
+
 volumes:
   postgres_data:
   timescaledb_data:
