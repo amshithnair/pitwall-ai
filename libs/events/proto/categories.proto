@@ -109,7 +109,41 @@ message InsightGenerated {
   float confidence = 3;
 }
 
-// 5.12 System Events
+// 5.12 Analytics Events
+message LapAnalytics {
+  int32 lap_number = 1;
+  int32 lap_time_ms = 2;
+  int32 delta_to_best_ms = 3;
+  bool is_personal_best = 4;
+  bool is_session_best = 5;
+  int32 average_speed_kph = 6;
+  int32 max_speed_kph = 7;
+}
+
+message SectorAnalytics {
+  int32 sector_number = 1;
+  int32 sector_time_ms = 2;
+  int32 delta_to_best_ms = 3;
+  bool is_personal_best = 4;
+  bool is_session_best = 5;
+}
+
+message DriverAnalytics {
+  int32 gap_to_leader_ms = 1;
+  int32 gap_to_ahead_ms = 2;
+  int32 gap_to_behind_ms = 3;
+  float consistency_score = 4;
+  int32 average_lap_time_ms = 5;
+  int32 position_changes = 6;
+}
+
+message TyreAnalytics {
+  int32 tyre_age_laps = 1;
+  int32 stint_length = 2;
+  float estimated_degradation = 3;
+}
+
+// 5.13 System Events
 message SystemHealth {
   string service_name = 1;
   string status = 2; // HEALTHY, DEGRADED, FAILED
