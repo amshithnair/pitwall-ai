@@ -1,4 +1,4 @@
-.PHONY: up down restart logs clean
+.PHONY: up down restart logs clean install lint format test build-base
 
 # Docker Compose shortcuts
 up:
@@ -15,3 +15,21 @@ logs:
 
 clean:
 	docker-compose down -v
+
+# Developer Tooling
+install:
+	uv sync --all-packages
+	uv run pre-commit install
+
+lint:
+	uv run ruff check .
+	uv run mypy .
+
+format:
+	uv run ruff format .
+
+test:
+	uv run pytest
+
+build-base:
+	docker build -t pitwall-base:latest -f Dockerfile.base .

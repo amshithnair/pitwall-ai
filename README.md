@@ -7,7 +7,7 @@ PitWall AI is an AI-native Formula 1 Intelligence Platform that transforms live 
 This repository follows a monorepo approach for all PitWall AI components:
 
 - `docs/`: Product Requirements Document (PRD), Architecture Decision Records (ADRs).
-- `services/`: Microservices (e.g., normalizer, replay-engine, ai-orchestrator).
+- `services/`: Microservices (e.g., provider-adapter, normalizer, replay-engine, ai-orchestrator).
 - `libs/`: Shared libraries (e.g., canonical event schemas).
 - `frontend/`: The web application dashboard.
 

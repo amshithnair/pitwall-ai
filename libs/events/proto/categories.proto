@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package pitwall.events.categories;
+
+import "google/protobuf/timestamp.proto";
+
+// 5.1 Session Events
+message SessionStarted {
+  string session_type = 1;
+  int32 laps_total = 2;
+}
+
+message SessionEnded {
+  string session_type = 1;
+}
+
+// 5.2 Timing Events
+message LapStarted {
+  int32 lap_number = 1;
+}
+
+message LapCompleted {
+  int32 lap_number = 1;
+  int32 lap_time_ms = 2;
+  bool is_personal_best = 3;
+}
+
+message SectorCompleted {
+  int32 sector_number = 1;
+  int32 sector_time_ms = 2;
+  bool is_personal_best = 3;
+}
+
+// 5.3 Position Events
+message PositionChanged {
+  int32 old_position = 1;
+  int32 new_position = 2;
+  string overtaken_driver_id = 3;
+}
+
+// 5.4 Pit Events
+message PitEntry {
+}
+
+message PitStop {
+  int32 stationary_duration_ms = 1;
+}
+
+message PitExit {
+}
+
+// 5.5 Tyre Events
+message TyreChanged {
+  string compound = 1; // SOFT, MEDIUM, HARD, INTER, WET
+  bool is_new = 2;
+  int32 stint_number = 3;
+}
+
+message TyreDegradation {
+  float degradation_percentage = 1;
+  int32 estimated_laps_remaining = 2;
+}
+
+// 5.6 Telemetry Events
+message TelemetryPoint {
+  int32 speed_kph = 1;
+  int32 throttle_percent = 2;
+  int32 brake_percent = 3;
+  int32 gear = 4;
+  int32 rpm = 5;
+  bool drs_active = 6;
+  float x = 7;
+  float y = 8;
+  float z = 9;
+}
+
+// 5.7 Weather Events
+message WeatherUpdated {
+  float air_temp_c = 1;
+  float track_temp_c = 2;
+  float humidity_percent = 3;
+  float rain_probability = 4;
+  float wind_speed_mps = 5;
+}
+
+// 5.8 Race Control Events
+message RaceControlFlag {
+  string flag_type = 1; // GREEN, YELLOW, RED, SC, VSC
+  string reason = 2;
+}
+
+// 5.9 Prediction Events
+message PredictionGenerated {
+  string prediction_type = 1; // e.g., "pit_window"
+  string payload_json = 2; // Flexible JSON payload for complex predictions
+  float confidence = 3;
+}
+
+// 5.10 Strategy Events
+message StrategyGenerated {
+  string strategy_type = 1;
+  string payload_json = 2;
+}
+
+// 5.11 AI Events
+message InsightGenerated {
+  string insight_text = 1;
+  string category = 2;
+  float confidence = 3;
+}
+
+// 5.12 System Events
+message SystemHealth {
+  string service_name = 1;
+  string status = 2; // HEALTHY, DEGRADED, FAILED
+}
+
+message ReplayStateChanged {
+  string replay_id = 1;
+  string state = 2; // STARTED, PAUSED, STOPPED
+  float speed_multiplier = 3;
+}

@@ -1,0 +1,46 @@
+[project]
+name = "pitwall-ai"
+version = "0.1.0"
+description = "PitWall AI - Formula 1 Intelligence Platform"
+requires-python = ">=3.12"
+authors = [{ name = "Amshith Nair", email = "amshithnair@gmail.com" }]
+
+[tool.uv.workspace]
+members = [
+    "libs/*",
+    "services/*",
+    "templates/*"
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [".git", ".venv", "__pycache__", "build", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+ignore = []
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+namespace_packages = true
+explicit_package_bases = true
+mypy_path = "libs/common/src,libs/config/src,libs/events/src,libs/logging/src,libs/testing/src,templates/service/src"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q --cov"
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=3.6.0",
+    "ruff>=0.2.1",
+    "mypy>=1.8.0",
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "httpx>=0.26.0",
+]

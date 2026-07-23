@@ -1,0 +1,36 @@
+name: Lint and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install uv
+      run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    - name: Install dependencies
+      run: uv pip install --system -e "libs/*" -e "services/*" -e "templates/*"
+
+    - name: Check formatting with Ruff
+      run: uv run ruff format --check .
+
+    - name: Lint with Ruff
+      run: uv run ruff check .
+
+    - name: Type check with mypy
+      run: uv run mypy .
+
+    - name: Test with pytest
+      run: uv run pytest

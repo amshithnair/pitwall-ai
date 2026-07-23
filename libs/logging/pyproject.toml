@@ -1,0 +1,21 @@
+[project]
+name = "pitwall-logging"
+version = "0.1.0"
+description = "PitWall AI - Structured Logging and Telemetry"
+requires-python = ">=3.12"
+dependencies = [
+    "structlog>=24.1.0",
+    "opentelemetry-api>=1.22.0",
+    "pitwall-config",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pitwall"]
+
+
+[tool.uv.sources]
+pitwall-config = { workspace = true }
