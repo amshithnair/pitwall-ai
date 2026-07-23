@@ -94,6 +94,19 @@ services:
     depends_on:
       - redis
 
+  telemetry-engine:
+    build:
+      context: .
+      dockerfile: services/telemetry-engine/Dockerfile
+    ports:
+      - "8004:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    depends_on:
+      - redis
+      - timescaledb
+
 volumes:
   postgres_data:
   timescaledb_data:
