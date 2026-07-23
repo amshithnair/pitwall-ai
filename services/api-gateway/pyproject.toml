@@ -1,0 +1,29 @@
+[project]
+name = "pitwall-api-gateway"
+version = "0.1.0"
+description = "PitWall AI - API Gateway & WebSockets"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "websockets>=12.0",
+    "redis>=5.0.1",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+    "pydantic>=2.0.0",
+    "pitwall-common",
+    "pitwall-events",
+    "pitwall-logging"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pitwall"]
+
+[tool.uv.sources]
+pitwall-common = { workspace = true }
+pitwall-events = { workspace = true }
+pitwall-logging = { workspace = true }
