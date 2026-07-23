@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package pitwall.events;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+// The standard envelope for all PitWall AI events.
+message EventEnvelope {
+  // Semantic version of the schema (e.g., "1.0")
+  string schema_version = 1;
+
+  // Unique identifier for this specific event (UUIDv4)
+  string event_id = 2;
+
+  // Type of event (e.g., "lap.completed", "session.started")
+  string event_type = 3;
+
+  // Session identifier (e.g., "2026-bahrain-race")
+  string session_id = 4;
+
+  // Race identifier (e.g., "2026-bahrain")
+  string race_id = 5;
+
+  // TLA driver ID if applicable (e.g., "VER"). Optional.
+  optional string driver_id = 6;
+
+  // UTC timestamp of when the event occurred in reality
+  google.protobuf.Timestamp timestamp = 7;
+
+  // Monotonically increasing sequence number per session
+  int64 sequence = 8;
+
+  // The system that produced this event (e.g., "fastf1")
+  string source = 9;
+
+  // The category-specific payload
+  google.protobuf.Any payload = 10;
+}

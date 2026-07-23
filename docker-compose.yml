@@ -42,8 +42,74 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage
 
+  # Services
+  template-service:
+    build:
+      context: .
+      dockerfile: templates/service/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    depends_on:
+      - redis
+
+  replay-engine:
+    build:
+      context: .
+      dockerfile: services/replay-engine/Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    depends_on:
+      - redis
+      - timescaledb
+
+  provider-adapter:
+    build:
+      context: .
+      dockerfile: services/provider-adapter/Dockerfile
+    ports:
+      - "8002:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    depends_on:
+      - redis
+    volumes:
+      - fastf1_cache:/app/fastf1_cache
+
+  normalizer:
+    build:
+      context: .
+      dockerfile: services/normalizer/Dockerfile
+    ports:
+      - "8003:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    depends_on:
+      - redis
+
+  telemetry-engine:
+    build:
+      context: .
+      dockerfile: services/telemetry-engine/Dockerfile
+    ports:
+      - "8004:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    depends_on:
+      - redis
+      - timescaledb
+
 volumes:
   postgres_data:
   timescaledb_data:
   redis_data:
-  qdrant_data:
+  fastf1_cache:
+  #qdrant_data:
