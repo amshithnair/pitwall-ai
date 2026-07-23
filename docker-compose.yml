@@ -120,9 +120,26 @@ services:
       - redis
       - postgres
 
+  prediction-engine:
+    build:
+      context: .
+      dockerfile: services/prediction-engine/Dockerfile
+    ports:
+      - "8006:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+      - MODELS_DIR=/app/models
+    volumes:
+      - prediction_models:/app/models
+    depends_on:
+      - redis
+      - postgres
+
 volumes:
   postgres_data:
   timescaledb_data:
+  prediction_models:
   redis_data:
   fastf1_cache:
   #qdrant_data:
