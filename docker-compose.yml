@@ -146,7 +146,29 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY:-sk-mock-key}
     depends_on:
       - redis
-      - qdrant
+  api-gateway:
+    build:
+      context: .
+      dockerfile: services/api-gateway/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+      - JWT_SECRET=super-secret-pitwall-key
+    depends_on:
+      - redis
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - api-gateway
 
 volumes:
   postgres_data:
