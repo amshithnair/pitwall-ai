@@ -134,7 +134,19 @@ services:
       - prediction_models:/app/models
     depends_on:
       - redis
-      - postgres
+  ai-orchestrator:
+    build:
+      context: .
+      dockerfile: services/ai-orchestrator/Dockerfile
+    ports:
+      - "8007:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-sk-mock-key}
+    depends_on:
+      - redis
+      - qdrant
 
 volumes:
   postgres_data:
@@ -142,4 +154,4 @@ volumes:
   prediction_models:
   redis_data:
   fastf1_cache:
-  #qdrant_data:
+  qdrant_data:
