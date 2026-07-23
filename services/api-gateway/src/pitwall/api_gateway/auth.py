@@ -4,13 +4,12 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from jose import JWTError, jwt
-from passlib.context import CryptContext
+import bcrypt
 
 SECRET_KEY = os.getenv("JWT_SECRET", "super-secret-pitwall-key")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 # 1 day
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 auth_router = APIRouter()
 
 class LoginRequest(BaseModel):
@@ -26,13 +25,17 @@ class TokenResponse(BaseModel):
 USERS = {
     "analyst": {
         "username": "analyst",
-        "password_hash": pwd_context.hash("pitwall2024"),
+        "password_hash": bcrypt.hashpw(b"pitwall2024", bcrypt.gensalt()).decode("utf-8"),
         "role": "Analyst"
     }
 }
 
 def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+    if isinstance(plain_password, str):
+        plain_password = plain_password.encode('utf-8')
+    if isinstance(hashed_password, str):
+        hashed_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_password, hashed_password)
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
