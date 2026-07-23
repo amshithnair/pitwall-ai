@@ -46,7 +46,7 @@ make up
 ### Accessing the Platform
 Once running, you can access the following services:
 - **Dashboard (Frontend):** `http://localhost:3000` (Login with username: `analyst`, password: `pitwall2024`)
-- **API Gateway:** `http://localhost:8000`
+- **API Gateway:** `http://localhost:8008`
 - **AI Orchestrator:** `http://localhost:8007`
 
 ### Testing the Endpoints

@@ -9,14 +9,14 @@ Write-Host " Testing PitWall AI Endpoints"
 Write-Host "========================================="
 
 # 1. Test Authentication (Login)
-Write-Host "`n1. Testing Login (POST http://localhost:8000/api/auth/login)..."
+Write-Host "`n1. Testing Login (POST http://localhost:8008/api/auth/login)..."
 $loginBody = @{
     username = "analyst"
     password = "pitwall2024"
 } | ConvertTo-Json
 
 try {
-    $loginResponse = Invoke-RestMethod -Uri "http://localhost:8000/api/auth/login" -Method Post -ContentType "application/json" -Body $loginBody
+    $loginResponse = Invoke-RestMethod -Uri "http://localhost:8008/api/auth/login" -Method Post -ContentType "application/json" -Body $loginBody
     $token = $loginResponse.access_token
     Write-Host "Login successful! Token: $($token.Substring(0, 15))..." -ForegroundColor Green
 } catch {

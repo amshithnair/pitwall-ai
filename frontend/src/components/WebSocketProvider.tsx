@@ -13,7 +13,7 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
     if (!token) return;
     
     const connect = () => {
-      ws.current = new WebSocket(`ws://localhost:8000/ws?token=${token}`);
+      ws.current = new WebSocket(`ws://localhost:8008/ws?token=${token}`);
       
       ws.current.onmessage = (event) => {
         if (event.data === "pong") return;
