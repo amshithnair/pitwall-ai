@@ -15,12 +15,45 @@ This repository follows a monorepo approach for all PitWall AI components:
 
 ### Prerequisites
 - Docker and Docker Compose
-- Make
+- Make (optional, but convenient shortcuts are provided)
+
+### Environment Variables
+Before running the application, you need to configure your environment variables. This project uses a `.env` file to securely pass configuration to Docker Compose.
+
+1. Locate the `.env.example` file in the root directory.
+2. Copy it to a new file named `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+3. Open the `.env` file and insert your actual `OPENAI_API_KEY`. Without this, the AI Orchestrator will use a mock response.
 
 ### Quick Start
-To start the foundational infrastructure (PostgreSQL, TimescaleDB, Redis, Qdrant):
+
+To build all the microservices and the Next.js frontend:
+```bash
+make build
+# or run manually: docker-compose build
+```
+
+To start the foundational infrastructure (PostgreSQL, TimescaleDB, Redis, Qdrant) and all services:
 ```bash
 make up
+# or run manually: docker-compose up -d
+```
+
+> **Note on Timeouts:** If you experience a `TLS handshake timeout` while pulling images (like Qdrant or Postgres) via `make up`, this is a temporary network issue with Docker Hub. Retry the command, or pull the images individually first (`docker pull qdrant/qdrant:latest`).
+
+### Accessing the Platform
+Once running, you can access the following services:
+- **Dashboard (Frontend):** `http://localhost:3000` (Login with username: `analyst`, password: `pitwall2024`)
+- **API Gateway:** `http://localhost:8000`
+- **AI Orchestrator:** `http://localhost:8007`
+
+### Testing the Endpoints
+You can use the provided PowerShell script to quickly verify that the API Gateway and AI Orchestrator are running properly.
+
+```powershell
+.\scripts\test_endpoints.ps1
 ```
 
 To stop the infrastructure:

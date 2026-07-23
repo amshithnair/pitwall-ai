@@ -1,6 +1,9 @@
 .PHONY: up down restart logs clean install lint format test build-base
 
 # Docker Compose shortcuts
+build:
+	docker-compose build
+
 up:
 	docker-compose up -d
 
